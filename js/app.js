@@ -1,6 +1,6 @@
-// jshint esversion: 6
 
-// Declare our global variables
+
+// Declare variables
 let map;
 let infoWindow;
 let bounds;
@@ -30,7 +30,7 @@ function googleMapsError() {
 // Doesn't repeat foresquare alert's
 let foreSquareAlert = false;
 
-// Connecting markers 
+// markers 
 let LocationMarker = function (info) {
   let self = this;
 
@@ -41,10 +41,10 @@ let LocationMarker = function (info) {
 
   this.visible = ko.observable(true);
 
-  // Standard marker color as oragne
+  // Standard marker color as red
   let defaultIcon = makeMarkerIcon('e74c3c');
 
-  // On hover change color to cyan
+  // On hover change color to yellow
   let highlightedIcon = makeMarkerIcon('f1c40f');
 
   // Foursquare API credentials
@@ -75,7 +75,7 @@ let LocationMarker = function (info) {
     foreSquareAlert = error.responseJSON.meta.errorDetail;
   });
 
-  // Marker location & info of list (markers.js)
+  // Marker location & info of places (markers.js)
   this.marker = new google.maps.Marker({
     position: this.position,
     title: this.title,
@@ -96,14 +96,14 @@ let LocationMarker = function (info) {
     }
   });
 
-  // InfoWindow appears onclick
+  // InfoWindow onclick
   this.marker.addListener('click', function () {
     populateInfoWindow(this, self.street, self.city, infoWindow);
     toggleBounce(this);
     map.panTo(this.getPosition());
   });
 
-  // Highlight marker on mouseover
+  // Highlight on mouseover
   this.marker.addListener('mouseover', function () {
     this.setIcon(highlightedIcon);
   });
@@ -197,7 +197,7 @@ function populateInfoWindow(marker, street, city, infowindow) {
       }
     };
 
-    // Use streetView to show closes street view option
+    // Use streetView to show option
     streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
     infowindow.open(map, marker);
   }
